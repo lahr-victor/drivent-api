@@ -7,4 +7,16 @@ async function findByUser(userId: number) {
   });
 }
 
-export const bookingRepository = { findByUser };
+async function countByRoom(roomId: number) {
+  return prisma.booking.count({
+    where: { roomId },
+  });
+}
+
+async function create(roomId: number, userId: number) {
+  return prisma.booking.create({
+    data: { roomId, userId },
+  });
+}
+
+export const bookingRepository = { findByUser, countByRoom, create };

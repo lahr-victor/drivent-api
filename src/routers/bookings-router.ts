@@ -1,10 +1,14 @@
 import { Router } from 'express';
 
-import { authenticateToken } from '@/middlewares';
-import { getBookingByUser } from '@/controllers/bookings-controller';
+import { authenticateToken, validateBody } from '@/middlewares';
+import { createBooking, getBookingByUser } from '@/controllers/bookings-controller';
+import { bookingSchema } from '@/schemas/bookings-schemas';
 
 const bookingsRouter = Router();
 
-bookingsRouter.get('/', authenticateToken, getBookingByUser);
+bookingsRouter
+  .all('/*', authenticateToken)
+  .get('/', getBookingByUser)
+  .post('/', validateBody(bookingSchema), createBooking);
 
 export { bookingsRouter };
