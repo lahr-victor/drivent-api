@@ -18,3 +18,13 @@ export async function createBooking(req: AuthenticatedRequest, res: Response): P
 
   return res.status(httpStatus.OK).send({ bookingId: booking.id });
 }
+
+export async function updateBooking(req: AuthenticatedRequest, res: Response): Promise<Response> {
+  const { roomId } = req.body;
+  const { userId } = req;
+  const { bookingId } = req.params;
+
+  const booking = await bookingService.update(roomId, userId, parseInt(bookingId, 10));
+
+  return res.status(httpStatus.OK).send({ bookingId: booking.id });
+}

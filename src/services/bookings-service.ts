@@ -34,4 +34,13 @@ async function create(roomId: number, userId: number) {
   return await bookingRepository.create(roomId, userId);
 }
 
-export const bookingService = { getByUser, create };
+async function update(roomId: number, userId: number, bookingId: number) {
+  const booking = await bookingRepository.findByUser(userId);
+  if (!booking) throw notFoundError();
+
+  await validate(roomId, userId);
+
+  return await bookingRepository.update(roomId, bookingId);
+}
+
+export const bookingService = { getByUser, create, update };
