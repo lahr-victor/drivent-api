@@ -36,7 +36,7 @@ async function create(roomId: number, userId: number) {
 
 async function update(roomId: number, userId: number, bookingId: number) {
   const booking = await bookingRepository.findByUser(userId);
-  if (!booking) throw notFoundError();
+  if (!booking) throw forbiddenError();
 
   await validate(roomId, userId);
 
